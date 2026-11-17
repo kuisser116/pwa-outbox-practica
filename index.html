@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e7e7e4" />
+  <meta name="description" content="PWA con persistencia offline en IndexedDB, patron Outbox y Background Sync." />
+  <title>PWA Outbox - Sincronizacion Offline</title>
+
+  <!-- Rutas relativas: obligatorias para GitHub Pages en subdirectorio -->
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+</head>
+<body>
+
+  <header>
+    <div class="marca">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+      <span>Outbox</span>
+    </div>
+
+    <span id="badge-red" class="dot" title="Estado de la red" role="status" aria-label="Estado de la red"></span>
+  </header>
+
+  <main>
+
+    <section class="panel">
+      <form id="form-incidencia" autocomplete="off">
+        <input type="text" id="titulo" placeholder="Titulo de la incidencia" aria-label="Titulo de la incidencia" required />
+        <textarea id="descripcion" rows="2" placeholder="Detalle tecnico" aria-label="Detalle tecnico" required></textarea>
+
+        <div class="fila">
+          <button type="submit" id="btn-enviar" title="Enviar reporte" aria-label="Enviar reporte">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="separador"></div>
+
+      <div class="barra">
+        <div class="contadores">
+          <span class="pastilla pendiente" id="badge-pendientes" title="Pendientes de sincronizar">0</span>
+          <button type="button" id="btn-sincronizar" title="Sincronizar ahora" aria-label="Sincronizar ahora">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 11-3.2-6.9"/><path d="M21 3v6h-6"/></svg>
+          </button>
+          <button type="button" id="btn-purgar" title="Purgar sincronizados" aria-label="Purgar sincronizados">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>
+          </button>
+        </div>
+
+        <h2 class="sr">Bandeja de salida</h2>
+      </div>
+
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-id">ID</th>
+              <th>Titulo</th>
+              <th class="col-estado">Estado</th>
+              <th class="col-hora">Hora</th>
+              <th class="col-accion"></th>
+            </tr>
+          </thead>
+          <tbody id="lista-outbox">
+            <tr><td colspan="5" class="vacio">Sin registros</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <details class="log">
+      <summary title="Bitacora" aria-label="Bitacora">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+        <span id="ultimo-aviso">Listo</span>
+      </summary>
+      <ul id="bitacora"></ul>
+    </details>
+
+  </main>
+
+  <!-- db-helper.js SIEMPRE antes de app.js: deja las funciones en el ambito global -->
+  <script src="./db-helper.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
