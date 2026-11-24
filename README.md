@@ -24,7 +24,7 @@ App publicada: https://kuisser116.github.io/pwa-outbox-practica/
 
 ```
 pwa-outbox-practica/
-├── index.html       Interfaz: formulario de incidencias, bandeja de salida y bitacora
+├── index.html       Interfaz: formulario de incidencias y bandeja de salida
 ├── styles.css       Tema oscuro responsive
 ├── db-helper.js     Mini-wrapper promisificado de IndexedDB (compartido con el SW)
 ├── app.js           UI, envio resiliente y reconexion
@@ -57,12 +57,9 @@ transaccion `readonly` (lecturas) o `readwrite` (escrituras).
 | `abrirDB()` | — | Promesa con `IDBDatabase`; crea el esquema en `onupgradeneeded`. |
 | `guardarRegistro(datos)` | CREATE | `store.add()` y resuelve el id en `tx.oncomplete` (no en `req.onsuccess`). |
 | `obtenerTodosLosRegistros()` | READ | `store.getAll()` en transaccion `readonly`. |
-| `obtenerRegistrosPorEstado(estado)` | READ | `index('por_estado').getAll(estado)`. |
 | `actualizarEstadoRegistro(id, estado)` | UPDATE | `store.get(id)` y, dentro de su `onsuccess`, `store.put(registro)` en la misma transaccion. |
 | `incrementarIntentos(id)` | UPDATE | Suma un intento fallido sin cambiar el estado. |
 | `eliminarRegistro(id)` | DELETE | `store.delete(id)`. |
-| `eliminarRegistros(ids)` | DELETE | Purga masiva en una transaccion. |
-| `contarRegistros()` | READ | `store.count()`. |
 
 ## Flujo del patron Outbox
 
