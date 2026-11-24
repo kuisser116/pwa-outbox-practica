@@ -63,7 +63,10 @@ function procesar(datos) {
       return guardar(datos, 'sincronizado');
     })
     .catch(function () {
-      return guardar(datos, 'pendiente').then(registrarSync);
+      return guardar(datos, 'pendiente').then(function (id) {
+        registrarSync();
+        return id;
+      });
     })
     .then(render);
 }

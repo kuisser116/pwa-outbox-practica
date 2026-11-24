@@ -1,5 +1,7 @@
 'use strict';
 
+importScripts('./db-helper.js');
+
 const CACHE = 'static-outbox-v2';
 const ENDPOINT = 'https://jsonplaceholder.typicode.com/posts';
 const FILES = ['./', './index.html', './styles.css', './db-helper.js', './app.js', './manifest.json'];
